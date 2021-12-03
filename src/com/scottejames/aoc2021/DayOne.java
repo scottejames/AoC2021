@@ -25,5 +25,19 @@ public class DayOne {
             prior = curr;
         }
         System.out.println("Part 2: " + count);
+
+        prior = Integer.MAX_VALUE;
+        count = 0;
+
+        int curr = data.get(0) + data.get(1)+ data.get(2);
+
+        for (int i = 1; i < data.size()-1;i++){
+            if (curr > prior) count++;
+            prior = curr;
+            curr = curr - data.get(i-1) + data.get(i+1);
+        }
+
+        System.out.println("Part 2 for james: " + count);
+
     }
 }
