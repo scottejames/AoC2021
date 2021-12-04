@@ -14,7 +14,10 @@ public class DayFour {
         List<String> data = fh.getFileAsList();
         drawnNumbers = Stream.of(data.get(0).split(",")).mapToInt(Integer::parseInt).toArray();
         populateGridList(data);
+        Grid<Integer> lastWinner = null;
+        int lastRemoved = 0;
         for (int i = 0; i < drawnNumbers.length; i++) {
+            int remaining = drawnNumbers.length - i;
 
             // apply next thing
             for (Grid<Integer> grid : _gridList) {
@@ -23,25 +26,32 @@ public class DayFour {
             }
 
             // Test for winning condition
-            Grid<Integer> winningGrid = winningGrid();
+            List<Grid<Integer>> winningGrids = winningGrid();
 
-            if (winningGrid != null) {
-                winningGrid.showGrid();
-                int score = scoreWinner(winningGrid);
-                System.out.println("Part 1 scores " + score + " x " + drawnNumbers[i] + " = " + score * drawnNumbers[i]);
-                break;
+            if (!winningGrids.isEmpty()){
+                lastWinner = winningGrids.get(0);
+                lastRemoved = drawnNumbers[i];
+                for (Grid<Integer> g : winningGrids){
+                    _gridList.remove(g);
+                }
+
             }
-
-
         }
+
+
+        lastWinner.showGrid();
+        int score = scoreWinner(lastWinner);
+        System.out.println("Score : " + score + " removed " + lastRemoved);
+
     }
 
 
-    public static Grid<Integer> winningGrid() {
-        Grid<Integer> result = null;
+    public static List<Grid<Integer>> winningGrid() {
+        List<Grid<Integer>> result = new ArrayList<>();
+
         for (Grid<Integer> grid : _gridList) {
             if (isWinner(grid))
-                result = grid;
+                result.add(grid);
         }
         return result;
 
@@ -49,13 +59,13 @@ public class DayFour {
 
     public static boolean isWinner(Grid<Integer> grid) {
         boolean result = false;
-        for (int x = 0; x < grid.getWidth(); x++) {
+        for (int x = 0; x <= grid.getWidth(); x++) {
             int colSum = ArrayHelper.sumListOfInteger(grid.getColumn(x));
             if (colSum == 0) {
                 result = true;
             }
         }
-        for (int y = 0; y < grid.getHeight(); y++) {
+        for (int y = 0; y <= grid.getHeight(); y++) {
             int rowSum = ArrayHelper.sumListOfInteger(grid.getRow(y));
             if (rowSum == 0) {
                 result = true;
@@ -95,8 +105,6 @@ public class DayFour {
                 rowCount++;
             }
         }
-//        for (Grid<Integer> g : _gridList){
-//            g.showGrid();
-//        }
+
     }
 }
