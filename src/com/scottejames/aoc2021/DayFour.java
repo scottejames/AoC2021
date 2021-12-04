@@ -59,7 +59,7 @@ public class DayFour {
 
     public static boolean isWinner(Grid<Integer> grid) {
         boolean result = false;
-        for (int x = 0; x <= grid.getWidth(); x++) {
+        for (int x = 0; x < grid.getWidth(); x++) {
             int colSum = ArrayHelper.sumListOfInteger(grid.getColumn(x));
             if (colSum == 0) {
                 result = true;
