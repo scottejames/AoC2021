@@ -17,6 +17,11 @@ public class Grid<T> {
         if (p.y > height) height = p.y;
         _data.put(p, value);
     }
+    public T get(Point p) {
+        if (p.x > width) width = p.x;
+        if (p.y > height) height = p.y;
+        return _data.get(p);
+    }
 
     public List<Point> getRowPoints(int row) {
         List<Point> result = new ArrayList<>();
@@ -64,7 +69,7 @@ public class Grid<T> {
         return result;
     }
 
-    public void set(List<Point> points, T e){
+    public void setListOfPoints(List<Point> points, T e){
         for (Point p : points) {
             _data.put(p,e);
         }
@@ -86,10 +91,22 @@ public class Grid<T> {
 
         for (int y = 0; y <= height; y++) {
             for (int x = 0; x <= width; x++) {
-                System.out.print(_data.get(new Point(x, y))+  " ");
+                T value = _data.get(new Point(x, y));
+                String show;
+                if (value == null) show = ".";
+                else show = value.toString();
+                System.out.print(show + " ");
             }
             System.out.println("");
         }
+    }
+
+    public List<T> getAllData(){
+        var results = new ArrayList<T>();
+        for (Point key: _data.keySet()){
+            results.add(_data.get(key));
+        }
+        return results;
     }
 
 

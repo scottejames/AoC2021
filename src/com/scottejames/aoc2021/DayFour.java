@@ -22,7 +22,7 @@ public class DayFour {
             // apply next thing
             for (Grid<Integer> grid : _gridList) {
                 List<Point> points = grid.exists(drawnNumbers[i]);
-                grid.set(points, 0);
+                grid.setListOfPoints(points, 0);
             }
 
             // Test for winning condition
