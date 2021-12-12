@@ -3,6 +3,7 @@ package com.scottejames.aoc2021;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Grid<T> {
     private HashMap<Point, T> _data = new HashMap<>();
@@ -40,8 +41,12 @@ public class Grid<T> {
         }
         return result;
     }
+    public Set<Point> getAllPoints() {
+        return _data.keySet();
+    }
 
-    public List<T> getRow(int r){
+
+        public List<T> getRow(int r){
         List<T> result = new ArrayList<>();
         List<Point> rowPoints = getRowPoints(r);
         for (Point p : rowPoints){
