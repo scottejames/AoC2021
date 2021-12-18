@@ -114,5 +114,18 @@ public class Grid<T> {
         return results;
     }
 
+    private boolean[][] makeGrid() {
+        int maxX = width;
+        int maxY = height;
+
+        boolean[][] grid = new boolean[maxY + 1][maxX + 1];
+
+        for (Point point : _data.keySet()) {
+            int c = point.x;
+            int r = point.y;
+            grid[r][c] = true;
+        }
+        return grid;
+    }
 
 }

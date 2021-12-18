@@ -12,7 +12,10 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-
+    public Point(String x, String y) {
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+    }
     public Point(Point p) {
         this.x = p.x;
         this.y = p.y;
