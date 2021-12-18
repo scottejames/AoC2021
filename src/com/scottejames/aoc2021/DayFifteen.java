@@ -4,7 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class DayFifteen {
+
     public static Grid<Integer> grid = new Grid<>();
+    public static Grid<Integer> largeGrid = new Grid<>();
     public static Grid<Long> dist = new Grid<>();
 
     record Cell (Point point, long distance) {}
@@ -14,16 +16,32 @@ public class DayFifteen {
         List<String> data = fu.getFileAsList();
 
         int row = 0;
+        int h = data.size();
+        int w = data.get(0).length();
 
         for (String line: data){
             for (int column = 0; column < line.length();column++){
                 Point p = new Point(column,row);
                 Integer i = Character.getNumericValue(line.charAt(column));
-                grid.add(p,i);
-                dist.add(p,Long.MAX_VALUE);
+//                grid.add(p,i);
+//                dist.add(p,Long.MAX_VALUE);
+                for (int dx=0; dx < 5; dx++) {
+                    for (int dy = 0; dy < 5; dy++) {
+                        int val = i + dx + dy;
+                        if (val >= 10) {
+                            val -= 9;
+                        }
+                        p = new Point(column + h * dx, row + w * dy);
+                        grid.add(p, val);
+                        dist.add(p,Long.MAX_VALUE);
+
+                    }
+                }
             }
             row++;
         }
+
+
         final Point start = new Point(0,0);
         final Point end = new Point(grid.getWidth(),grid.getHeight());
 
@@ -37,7 +55,7 @@ public class DayFifteen {
 
         while (!pq.isEmpty()) {
             Cell currCell = pq.poll();
-            System.out.println("Looking at " + currCell.point);
+//            System.out.println("Looking at " + currCell.point);
             if (currCell.point.equals(end)) {
                 System.out.println("COST " + currCell.distance);
                 System.exit(0);
